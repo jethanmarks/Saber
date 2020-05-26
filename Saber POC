@@ -1,0 +1,55 @@
+import time
+import math
+
+pixels = ["0","1","2","3","4","5","6","7","8","9","10"]
+phase = 0
+cs_RED = 255
+cs_GREEN = 0
+cs_BLUE = 0
+tor = False
+tog = True
+tob = False
+
+def red_wave():
+    for p in range(len(pixels)):
+        RED = int(abs(math.sin((p - phase)*3.14 / 18) * 235))+15
+        print("pixel",p, "is", RED, "/255 RED")
+        time.sleep(0.5)
+
+def color_shift(red, green, blue):
+  print(red, "/255 RED", green , "/255 GREEN", blue , "/255 BLUE")
+  time.sleep(.5)
+
+while True:
+  phase += 1
+  print("LOOP #", phase)
+  if tor:
+    if cs_RED != 255:
+      cs_RED += 15
+    else:
+      if cs_BLUE != 0:
+        cs_BLUE -= 15
+      else:
+        tor = False
+        tog = True
+  if tog:
+    if cs_GREEN != 255:
+      cs_GREEN += 15
+    else:
+      if cs_RED != 0:
+        cs_RED -= 15
+      else:
+        tog = False
+        tob = True
+  if tob:
+    if cs_BLUE != 255:
+      cs_BLUE += 15
+    else:
+      if cs_GREEN != 0:
+        cs_GREEN -= 15
+      else:
+        tob = False
+        tor = True
+
+  color_shift(cs_RED,cs_GREEN,cs_BLUE)
+  #red_wave()
